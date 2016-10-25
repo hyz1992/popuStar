@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+
+    <!-- 顶部标题计费点名称部分字体颜色 对应Demo中“biubiu” -->
+    <color name="sdk_title_fee_name_color">#b3002a</color>
+    <!-- 内容区域正常文字部分字体颜色 -->
+    <color name="sdk_content_normal_text_color">#ac7850</color>
+    <!-- sdk顶部标题栏道具价格部分字体颜色 对应Demo中"￥1" -->
+    <color name="sdk_title_fee_price_color">#b3002a</color>
+    <!-- 短信支付高亮突出部分字体颜色 -->
+    <color name="sdk_sms_content_highlight_text_color">#dd5f7d</color>
+    <!-- 底部 menu 提示语部分字体颜色 -->
+    <color name="sdk_menu_tip_content_text_color">#ac7850</color>
+    <!-- 底部 menu 标题部分字体颜色 对应Demo中“温馨提示：” -->
+    <color name="sdk_menu_tip_head_text_color">#ff7f01</color>
+    <!-- sdk水平分割线颜色 -->
+    <color name="sdk_horizonal_line_divider_color">#a95818</color>
+    <!-- 底部 menu 垂直分割线颜色 -->
+    <color name="sdk_veritical_line_divider_color">#00d8ff</color>
+    
+</resources>
