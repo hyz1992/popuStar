@@ -50,12 +50,12 @@ var Martix = cc.Class({
                 // star.addChild(node)
                 // node.active = false
 
+                this.parentNode.addChild(star)
                 star.getComponent(Star).setIndex(i,j)
                 star.getComponent(Star).setType(Math.floor(cc.random0To1()*5))
-                this.parentNode.addChild(star)
                 this.Stars[i][j] = star
 
-                var offY = 1000+Math.floor(cc.random0To1()*100)
+                var offY = 1000+Math.floor(cc.random0To1()*300)
                 var pos = star.getPosition()
                 star.setPosition(pos.x,pos.y+offY)
                 var ani = cc.moveBy(1.0+0.04*j, cc.p(0, -offY)).easing(cc.easeCubicActionOut())
@@ -71,6 +71,8 @@ var Martix = cc.Class({
     //递归查找相同花色的节点
     findPopuStars:function(row,col,arr){
         // console.log(row,col)
+        if (!this.Stars[row][col])
+            return
         var target = this.Stars[row][col].getComponent(Star)
         arr[arr.length] = target.node
         var i,newI,newJ,star
@@ -99,7 +101,7 @@ var Martix = cc.Class({
         var size = this.parentNode.getContentSize()
         row = Math.floor(pos.x/(size.width/ROW_NUM))
         col = Math.floor(pos.y/(size.height/COL_NUM))
-        // console.log(row,col)
+        // console.log(size.width,size.height,row,col)
         // return
 
 
@@ -107,7 +109,7 @@ var Martix = cc.Class({
         var i,j,star
         var curTime = new Date().getTime()
 
-        console.log("xxxxx  ",curTime-this.oldTime)
+        // console.log("xxxxx  ",curTime-this.oldTime)
         if (new Date().getTime()-this.oldTime<300)
         {
             // console.log("not---------还在掉")
@@ -139,6 +141,12 @@ var Martix = cc.Class({
     },
     //节点爆炸，播放粒子特效
     bombStar:function(star){
+        if (cc.sys.platform ==cc.sys.MOBILE_BROWSER)
+        {
+            cc.log("xxxxxxxxxxxxxxxxxxx")
+            return
+        }    
+
         var pos = star.getPosition()
         var particle = cc.instantiate(this.bobmPrefab)
         particle.setPosition(pos)

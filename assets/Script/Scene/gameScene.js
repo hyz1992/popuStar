@@ -22,21 +22,24 @@ cc.Class({
         this.Martix = new Martix(this)
 
         var listener = {
-        event: cc.EventListener.KEYBOARD,
-        onKeyPressed: function (keyCode, event) {
-            cc.log('keyDown: ' + keyCode);
-            if (keyCode==cc.KEY.back)
-            {
+            event: cc.EventListener.KEYBOARD,
+            onKeyPressed: function (keyCode, event) {
+                cc.log('keyDown: ' + keyCode);
+                if (keyCode==cc.KEY.back)
+                {
 
+                }
+            },
+            onKeyReleased: function (keyCode, event) {
+                cc.log('keyUp: ' + keyCode);
             }
-        },
-        onKeyReleased: function (keyCode, event) {
-            cc.log('keyUp: ' + keyCode);
         }
-    }
-    // 绑定键盘事件
-    cc.eventManager.addListener(listener, this.node);
-        
+        // 绑定键盘事件
+        cc.eventManager.addListener(listener, this.node);
+        var girdPanel = this.node.getChildByName("girdPanel")
+        girdPanel.setScale(cc.director.getVisibleSize().width/girdPanel.getContentSize().width)
+        cc.log(cc.director.getVisibleSize())
+        cc.log(girdPanel.getContentSize())
     },
 
     start: function () {
