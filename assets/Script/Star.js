@@ -58,7 +58,8 @@ cc.Class({
 
     },
     onLoad:function(){
-    },
+    }, 
+    
 
     setIndex:function(i,j){
         var pos = new cc.Vec2(this.size.x/2+(this.size.x+this.padding)*i,this.size.y/2+(this.size.y+this.padding)*j)

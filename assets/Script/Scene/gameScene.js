@@ -65,10 +65,46 @@ cc.Class({
         var text_CurrentScore = cc.find("Canvas/text_CurrentScore")
         var toolPanel = cc.find("Canvas/toolPanel")
 
+        var place = cc.moveBy(0.0,0,500)
+        var move = cc.moveBy(1,0,-500)
+        node_rank.runAction(cc.sequence(place,move))
+        text_targetScore.runAction(cc.sequence(place.clone(),move.clone(),cc.callFunc(this.nextLevel,this,this)))
+        text_CurrentScore.runAction(cc.sequence(place.clone(),move.clone()))
+
+        var sq = cc.sequence(cc.hide(),cc.moveBy(0,500,0),cc.show(),cc.delayTime(5),cc.moveBy(0.5,-500,0))
+        shop.runAction(sq)
+        toolPanel.runAction(sq.clone())
     },
 
-    nextLevel:function()
+    nextLevel:function(node,that)
     {
+        var text_nextRound = cc.find("Canvas/text_nextRound")
+        var text_nextTargetScore = cc.find("Canvas/text_nextTargetScore")
 
+        var text_targetScore = cc.find("Canvas/text_targetScore")
+        text_targetScore.runAction(cc.sequence(cc.delayTime(0.25),cc.blink(2,8)))
+
+        text_nextRound.active = true
+
+        var place = cc.moveBy(0.0,500,0)
+        var move = cc.moveBy(0.5,-500,0)
+        var callfunc = cc.callFunc(function(node){
+            node.active = false
+            node.runAction(cc.moveBy(500,0))
+        })
+        text_nextRound.runAction(cc.sequence(place,move,cc.delayTime(0.5),cc.callFunc(function(){
+            text_nextTargetScore.active = true
+            text_nextTargetScore.runAction(cc.sequence(place.clone(),move.clone(),cc.delayTime(1),cc.callFunc(function(){
+                text_nextRound.runAction(cc.sequence(move.clone(),callfunc.clone()))
+                text_nextTargetScore.runAction(cc.sequence(move.clone(),callfunc.clone(),cc.callFunc(function(){
+                    cc.log("ssssssssss")
+                    that.Martix.init()
+                })))
+            })))
+        })))
+    },
+
+    gameOver:function(){
+        
     },
 });

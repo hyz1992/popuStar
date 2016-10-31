@@ -18,14 +18,16 @@ var Martix = cc.Class({
         {
             this.Stars[i] = new Array(COL_NUM)
         }
-        this.init()
+        
         this.gameScene = gameScene
         this.parentNode.on('touchstart',this.onStarClick,this)
         this.oldTime = new Date().getTime()
+
+        // this.init()
     },
     init:function()
     {
-        
+        this.parentNode.removeAllChildren()
         var i,j
         for (i=0;i<ROW_NUM;i++)
         {
@@ -125,18 +127,18 @@ var Martix = cc.Class({
         for(i=0,star;star=arr[i++];){
             var index = star.getComponent(Star).getIndex()
             self.bombStar(star)
-            self.starPool.put(star);
             self.Stars[index.x][index.y] = null
             
             this.gameScene.scheduleOnce(function(){
                 self.audioMng.play_2()
-            },i*(0.4/arr.length))
+            },i*(0.1))
         }
         self.fallStars()
         //是不是游戏结束
         if (self.judgeDead())
         {
             console.log("挂了")
+            this.roundOver(this)
         }
     },
     //节点爆炸，播放粒子特效
@@ -144,6 +146,7 @@ var Martix = cc.Class({
         if (cc.sys.platform ==cc.sys.MOBILE_BROWSER)
         {
             cc.log("xxxxxxxxxxxxxxxxxxx")
+            this.starPool.put(star)
             return
         }    
 
@@ -156,6 +159,7 @@ var Martix = cc.Class({
         xx.endColor = color
         this.parentNode.addChild(particle)
         
+        this.starPool.put(star)
     },
 
     //节点遇到缝隙下坠
@@ -215,6 +219,51 @@ var Martix = cc.Class({
             }
         }
         return true
+    },
+    //结束一局
+    roundOver:function(self){
+        var i,j,star,acc
+        var leftNum = 0
+        for (i=0;i<ROW_NUM;i++)
+        {
+            for(j=0;j<COL_NUM;j++)
+            {
+                if(self.Stars[i][j]!=null)
+                {
+                    leftNum++
+                }
+            }
+        }
+        cc.log("剩余%d",leftNum)
+
+        if(leftNum<9)
+        {
+
+        }
+        else
+        {
+
+        }
+        acc = 0
+        for (i=0;i<ROW_NUM;i++)
+        {
+            for(j=0;j<COL_NUM;j++)
+            {
+                star = self.Stars[i][j]
+                if(star!=null)
+                {
+                    var sss = star
+                    self.gameScene.scheduleOnce(function(){
+                        self.audioMng.play_2()
+                        self.bombStar(sss)
+                        var index = sss.getComponent(Star).getIndex()
+                        cc.log(index)
+                        self.Stars[index.x][index.y] = null
+                    },acc*0.1)
+                    acc++
+                }
+            }
+        }
     },
 
 });
